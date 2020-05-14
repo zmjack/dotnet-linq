@@ -5,10 +5,4 @@
     <TargetFramework>netcoreapp3.1</TargetFramework>
   </PropertyGroup>
 
-  <ItemGroup>
-    <Compile Remove="dotnet-linq\node_modules\**" />
-    <EmbeddedResource Remove="dotnet-linq\node_modules\**" />
-    <None Remove="dotnet-linq\node_modules\**" />
-  </ItemGroup>
-
 </Project>

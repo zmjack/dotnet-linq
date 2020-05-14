@@ -10,9 +10,9 @@ var Linq = /** @class */ (function () {
         Array.prototype.select = this.select;
         Array.prototype.selectMany = this.selectMany;
         Array.prototype.where = this.where;
-        Array.prototype.all = this.all;
         Array.prototype.count = this.count;
         Array.prototype.any = this.any;
+        Array.prototype.all = this.all;
         Array.prototype.sum = this.sum;
         Array.prototype.average = this.average;
         Array.prototype.min = this.min;
@@ -39,7 +39,9 @@ var Linq = /** @class */ (function () {
         Array.prototype.orderByDescending = this.orderByDescending;
         Array.prototype.groupBy = this.groupBy;
         Array.prototype.groupJoin = this.groupJoin;
+        return true;
     };
+    Linq.version = '0.0.5';
     Linq.select = function (selector) {
         return this.map(function (source, index) { return selector(source, index); });
     };
@@ -49,10 +51,6 @@ var Linq = /** @class */ (function () {
     Linq.where = function (predicate) {
         return this.filter(predicate);
     };
-    Linq.all = function (predicate) {
-        var source = !predicate ? this : this.filter(function (item) { return !predicate(item); });
-        return source.length === 0;
-    };
     Linq.count = function (predicate) {
         var source = !predicate ? this : this.filter(predicate);
         return source.length;
@@ -60,6 +58,10 @@ var Linq = /** @class */ (function () {
     Linq.any = function (predicate) {
         var source = !predicate ? this : this.filter(predicate);
         return source.length > 0;
+    };
+    Linq.all = function (predicate) {
+        var source = !predicate ? this : this.filter(function (item) { return !predicate(item); });
+        return source.length === 0;
     };
     Linq.sum = function (selector) {
         return this.map(function (source) { return selector(source); }).reduce(function (a, b) { return a + b; });

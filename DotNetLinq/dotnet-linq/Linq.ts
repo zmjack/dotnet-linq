@@ -3,7 +3,9 @@ import { Ordered } from "./Ordered";
 
 export class Linq {
 
-    static enable() {
+    static version = '0.0.5';
+
+    static enable(): boolean {
         (Array.prototype as any).select = this.select;
         (Array.prototype as any).selectMany = this.selectMany;
 
@@ -44,6 +46,8 @@ export class Linq {
 
         (Array.prototype as any).groupBy = this.groupBy;
         (Array.prototype as any).groupJoin = this.groupJoin;
+
+        return true;
     }
 
     static select = function <TSource, TResult>(selector: (item: TSource, index: number) => TResult): TResult[] {

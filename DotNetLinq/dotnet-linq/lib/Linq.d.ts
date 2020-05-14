@@ -1,13 +1,14 @@
 import { Grouping } from "./Grouping";
 import { Ordered } from "./Ordered";
 export declare class Linq {
-    static enable(): void;
+    static version: string;
+    static enable(): boolean;
     static select: <TSource, TResult>(selector: (item: TSource, index: number) => TResult) => TResult[];
     static selectMany: <TSource, TResult>(selector: (item: TSource, index: number) => TResult[]) => TResult[];
     static where: <TSource>(predicate: (item: TSource, index: number) => boolean) => TSource[];
-    static all: <TSource>(predicate: (item: TSource) => boolean) => boolean;
     static count: <TSource>(predicate?: (item: TSource) => boolean) => number;
     static any: <TSource>(predicate?: (item: TSource) => boolean) => boolean;
+    static all: <TSource>(predicate: (item: TSource) => boolean) => boolean;
     static sum: <TSource>(selector: (item: TSource) => number) => number;
     static average: <TSource>(selector: (item: TSource) => number) => number;
     static min: <TSource>(selector: (item: TSource) => number) => number;
