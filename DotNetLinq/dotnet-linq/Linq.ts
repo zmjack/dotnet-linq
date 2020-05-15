@@ -3,7 +3,7 @@ import { Ordered } from "./Ordered";
 
 export class Linq {
 
-    static version = '0.0.5';
+    static version = '0.1.5';
 
     static enable(): boolean {
         (Array.prototype as any).select = this.select;
@@ -46,6 +46,9 @@ export class Linq {
 
         (Array.prototype as any).groupBy = this.groupBy;
         (Array.prototype as any).groupJoin = this.groupJoin;
+
+        (Array.prototype as any).zip = this.zip;
+        (Array.prototype as any).aggregate = this.aggregate;
 
         return true;
     }
@@ -233,4 +236,32 @@ export class Linq {
             return resultSelector(outerItem, innerItems);
         })
     };
+
+    static zip = function <TFirst, TSecond, TResult = { first: TFirst, second: TSecond }>(second: TSecond[], resultSelector?: (first: TFirst, second: TSecond) => TResult): TResult[] {
+        var first = this as TFirst[];
+        var zip: TResult[] = [];
+        var length = Math.min(first.length, second.length);
+        if (!resultSelector) {
+            for (var i = 0; i < length; i++) {
+                zip.push({ first: first[i], second: second[i] } as any);
+            }
+        } else {
+            for (var i = 0; i < length; i++) {
+                zip.push(resultSelector(first[i], second[i]));
+            }
+        }
+        return zip;
+    }
+
+    static aggregate = function <TSource, TAccumulate, TResult = TAccumulate>(seed: TAccumulate, func: (prev: TAccumulate, current: TSource) => TAccumulate, resultSelector?: (result: TAccumulate) => TResult): TResult {
+        var source = this as TSource[];
+        var result = seed;
+        for (var item of source) {
+            result = func(result, item);
+        }
+        if (resultSelector)
+            return resultSelector(result);
+        else return result as any;
+    }
+
 }

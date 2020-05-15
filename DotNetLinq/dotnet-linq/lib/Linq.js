@@ -39,9 +39,11 @@ var Linq = /** @class */ (function () {
         Array.prototype.orderByDescending = this.orderByDescending;
         Array.prototype.groupBy = this.groupBy;
         Array.prototype.groupJoin = this.groupJoin;
+        Array.prototype.zip = this.zip;
+        Array.prototype.aggregate = this.aggregate;
         return true;
     };
-    Linq.version = '0.0.5';
+    Linq.version = '0.1.5';
     Linq.select = function (selector) {
         return this.map(function (source, index) { return selector(source, index); });
     };
@@ -216,6 +218,34 @@ var Linq = /** @class */ (function () {
             var innerItems = inner.filter(function (innerItem) { return innerKeySelector(innerItem) === outerKey; });
             return resultSelector(outerItem, innerItems);
         });
+    };
+    Linq.zip = function (second, resultSelector) {
+        var first = this;
+        var zip = [];
+        var length = Math.min(first.length, second.length);
+        if (!resultSelector) {
+            for (var i = 0; i < length; i++) {
+                zip.push({ first: first[i], second: second[i] });
+            }
+        }
+        else {
+            for (var i = 0; i < length; i++) {
+                zip.push(resultSelector(first[i], second[i]));
+            }
+        }
+        return zip;
+    };
+    Linq.aggregate = function (seed, func, resultSelector) {
+        var source = this;
+        var result = seed;
+        for (var _i = 0, source_1 = source; _i < source_1.length; _i++) {
+            var item = source_1[_i];
+            result = func(result, item);
+        }
+        if (resultSelector)
+            return resultSelector(result);
+        else
+            return result;
     };
     return Linq;
 }());

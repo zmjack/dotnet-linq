@@ -35,4 +35,9 @@ export declare class Linq {
     static orderByDescending: <TSource, TKey = string | number>(keySelector: (item: TSource) => TKey) => Ordered<TSource, TKey>;
     static groupBy: <TSource, TKey>(keySelector: (item: TSource) => TKey) => Grouping<TSource, TKey>[];
     static groupJoin: <TOuter, TInner, TKey, TResult>(inner: TInner[], outerKeySelector: (outer: TOuter) => TKey, innerKeySelector: (inner: TInner) => TKey, resultSelector: (outerItem: TOuter, innerItems: TInner[]) => TResult) => TResult[];
+    static zip: <TFirst, TSecond, TResult = {
+        first: TFirst;
+        second: TSecond;
+    }>(second: TSecond[], resultSelector?: (first: TFirst, second: TSecond) => TResult) => TResult[];
+    static aggregate: <TSource, TAccumulate, TResult = TAccumulate>(seed: TAccumulate, func: (prev: TAccumulate, current: TSource) => TAccumulate, resultSelector?: (result: TAccumulate) => TResult) => TResult;
 }

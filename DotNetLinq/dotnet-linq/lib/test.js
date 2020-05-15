@@ -24,23 +24,12 @@ var games = [
     { champion: 'Anivia', time: new Date() },
 ];
 describe('test', function () {
+    it('zip test', function () {
+        console.log([1, 2].zip(['a', 'b', 'c']));
+        console.log([1, 2].zip(['a', 'b', 'c'], function (first, second) { return { f: first, s: second }; }));
+    });
 });
 describe('ts-sharp-linq', function () {
-    [
-        { name: 'a' },
-        { name: 'b' },
-    ].groupJoin([
-        { user: 'a', rank: 1 },
-        { user: 'a', rank: 3 },
-        { user: 'a', rank: 4 },
-        { user: 'b', rank: 2 },
-    ], function (x) { return x.name; }, function (x) { return x.user; }, function (o, i) {
-        return {
-            name: o.name,
-            minRank: i.min(function (xx) { return xx.rank; }),
-            maxRank: i.max(function (xx) { return xx.rank; })
-        };
-    });
     it('select test', function () {
         var records = getRecords();
         assert.deepEqual(records.select(function (x) { return x.name; }), ['Annie', 'Anivia', 'Ashe', 'Blitzcrank', 'Brand', 'Caitlyn']);
@@ -200,5 +189,13 @@ describe('ts-sharp-linq', function () {
             { champion: 'Brand', count: 1 },
             { champion: 'Caitlyn', count: 0 },
         ]);
+    });
+    it('zip test', function () {
+        assert.deepEqual([1, 2].zip(['a', 'b', 'c']), [{ first: 1, second: 'a' }, { first: 2, second: 'b' }]);
+        assert.deepEqual([1, 2].zip(['a', 'b', 'c'], function (first, second) { return { f: first, s: second }; }), [{ f: 1, s: 'a' }, { f: 2, s: 'b' }]);
+    });
+    it('aggregate test', function () {
+        assert.deepEqual([2, 3, 4].aggregate(5, function (prev, current) { return prev * current; }), 120);
+        assert.deepEqual([2, 3, 4].aggregate(5, function (prev, current) { return prev * current; }, function (result) { return 'result = ' + result; }), 'result = 120');
     });
 });

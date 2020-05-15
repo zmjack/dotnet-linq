@@ -52,4 +52,7 @@ declare interface Array<T> {
 
     groupBy<TKey>(keySelector: (item: T) => TKey): Array<IGrouping<TKey, T>>;
     groupJoin<TInner, TKey, TResult>(inner: TInner[], outerKeySelector: (outer: T) => TKey, innerKeySelector: (inner: TInner) => TKey, resultSelector: (outerItem: T, innerItems: TInner[]) => TResult): TResult[];
+
+    zip<TSecond, TResult = { first: T, second: TSecond }>(second: TSecond[], resultSelector?: (first: T, second: TSecond) => TResult): TResult[];
+    aggregate<TAccumulate, TResult = TAccumulate>(seed: TAccumulate, func: (prev: TAccumulate, current: T) => TAccumulate, resultSelector?: (result: TAccumulate) => TResult): TResult
 }

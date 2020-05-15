@@ -271,5 +271,23 @@ namespace DotNetLinq.Test
             });
         }
 
+        [Fact]
+        public void ZipTest()
+        {
+            assert.deepEqual(new[] { 1, 2 }.Zip(new[] { "a", "b", "c" }), new[] { (1, "a"), (2, "b") });
+            var result = new[] { 1, 2 }.Zip(new[] { "a", "b", "c" }, (first, second) =>
+            {
+                return new { f = first, s = second };
+            });
+            assert.deepEqual(result, new[] { new { f = 1, s = "a" }, new { f = 2, s = "b" } }); ;
+        }
+
+        [Fact]
+        public void AggregateTest()
+        {
+            assert.deepEqual(new[] { 2, 3, 4 }.Aggregate(5, (prev, current) => prev * current), 120);
+            assert.deepEqual(new[] { 2, 3, 4 }.Aggregate(5, (prev, current) => prev * current, result => "result = " + result), "result = 120");
+        }
+
     }
 }

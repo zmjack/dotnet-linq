@@ -22,8 +22,7 @@ npm i dotnet-linq
 
 ```powershell
 node
-> var dot = require('dotnet-linq');
-> dot.Linq.enable();
+require('dotnet-linq').Linq.enable();
 ```
 
 3. Try it.
@@ -234,5 +233,26 @@ node
   { name: 'b', minRank: 2, maxRank: 2, flag: 'blue' }
 ]
 */
+```
+
+### Zip
+
+```javascript
+[1, 2].zip(['a', 'b', 'c']);    // [ { first: 1, second: 'a' }, { first: 2, second: 'b' } ]
+[1, 2].zip(['a', 'b', 'c'], (first, second) => {    
+    return {
+        f: first,
+        s: second
+    }; 
+});                             // [ { f: 1, s: 'a' }, { f: 2, s: 'b' } ]
+```
+
+### Aggregate
+
+```javascript
+[2, 3, 4].aggregate(5, (prev, current) => prev * current);  // 120
+[2, 3, 4].aggregate(5,
+    (prev, current) => prev * current,
+    result => 'result = ' + result);                        // result = 120
 ```
 
