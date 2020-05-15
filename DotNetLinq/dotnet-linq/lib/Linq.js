@@ -43,7 +43,7 @@ var Linq = /** @class */ (function () {
         Array.prototype.aggregate = this.aggregate;
         return true;
     };
-    Linq.version = '0.1.5';
+    Linq.version = '0.2.1';
     Linq.select = function (selector) {
         return this.map(function (source, index) { return selector(source, index); });
     };
