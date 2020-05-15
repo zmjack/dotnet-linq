@@ -8,7 +8,21 @@
 
 <br/>
 
-## Try it with NodeJS
+## Use Browser
+
+If you want to use it in a **browser**, you just need to import **dotnet-linq.js** which in the **dist** folder:
+
+```html
+<script type="text/javascript" src="dotnet-linq.js"></script>
+```
+
+<u>We provide an example under the **Simples** folder.</u>
+
+You just need to run **index.html**, open the **console** (F12), and write some code.
+
+<br/>
+
+## Use NodeJS
 
 ### Premise
 
@@ -131,11 +145,11 @@ require('dotnet-linq').Linq.enable();
 [1, 2, 3, 4].singleOrDefault();     // Error: Sequence contains more than one element
 [1, 2, 3, 4].single();              // Error: Sequence contains more than one element
 [].singleOrDefault();               // null
-[].single();                        // Uncaught Error: Sequence contains no elements
+[].single();                        // Error: Sequence contains no elements
 [1, 2, 3, 4].singleOrDefault(x => x > 3);   // 4
 [1, 2, 3, 4].single(x => x > 3);            // 4
 [1, 2, 3, 4].singleOrDefault(x => x >= 5);  // null
-[1, 2, 3, 4].single(x => x >= 5);   // Uncaught Error: Sequence contains no elements
+[1, 2, 3, 4].single(x => x >= 5);   // Error: Sequence contains no elements
 ```
 
 ### Intersect / Except / Union
