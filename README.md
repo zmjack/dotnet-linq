@@ -256,3 +256,10 @@ require('dotnet-linq').Linq.enable();
     result => 'result = ' + result);                        // result = 120
 ```
 
+### DefaultIfEmpty
+
+```javascript
+['a', 'b'].defaultIfEmpty();    // [ 'a', 'b' ]
+[].defaultIfEmpty(), [null];    // [ null ]
+```
+
