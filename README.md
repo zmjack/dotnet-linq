@@ -10,7 +10,7 @@
 
 ## Use Browser
 
-If you want to use it in a **browser**, you just need to import **dotnet-linq.js** which in the **dist** folder:
+If you want to use it in a **browser**, you just need to import **dotnet-linq.js**, which is in the **dist** folder:
 
 ```html
 <script type="text/javascript" src="dotnet-linq.js"></script>
