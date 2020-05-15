@@ -20,10 +20,10 @@ declare interface Array<T> {
     any(predicate?: (item: T) => boolean): boolean;
     all(predicate: (item: T) => boolean): boolean;
 
-    sum(selector: (item: T) => number): number;
-    average(selector: (item: T) => number): number;
-    min(selector: (item: T) => number): number;
-    max(selector: (item: T) => number): number;
+    sum(selector?: (item: T) => number): number;
+    average(selector?: (item: T) => number): number;
+    min(selector?: (item: T) => number): number;
+    max(selector?: (item: T) => number): number;
 
     take(count: number): T[];
     takeLast(count: number): T[];
@@ -54,5 +54,7 @@ declare interface Array<T> {
     groupJoin<TInner, TKey, TResult>(inner: TInner[], outerKeySelector: (outer: T) => TKey, innerKeySelector: (inner: TInner) => TKey, resultSelector: (outerItem: T, innerItems: TInner[]) => TResult): TResult[];
 
     zip<TSecond, TResult = { first: T, second: TSecond }>(second: TSecond[], resultSelector?: (first: T, second: TSecond) => TResult): TResult[];
-    aggregate<TAccumulate, TResult = TAccumulate>(seed: TAccumulate, func: (prev: TAccumulate, current: T) => TAccumulate, resultSelector?: (result: TAccumulate) => TResult): TResult
+    aggregate<TAccumulate, TResult = TAccumulate>(seed: TAccumulate, func: (prev: TAccumulate, current: T) => TAccumulate, resultSelector?: (result: TAccumulate) => TResult): TResult;
+
+    defaultIfEmpty(defaultValue?: T): T[];
 }

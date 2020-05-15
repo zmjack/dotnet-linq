@@ -23,13 +23,7 @@ var games = [
     { champion: 'Brand', time: new Date() },
     { champion: 'Anivia', time: new Date() },
 ];
-describe('test', function () {
-    it('zip test', function () {
-        console.log([1, 2].zip(['a', 'b', 'c']));
-        console.log([1, 2].zip(['a', 'b', 'c'], function (first, second) { return { f: first, s: second }; }));
-    });
-});
-describe('ts-sharp-linq', function () {
+describe('ts-sharp-linq tests', function () {
     it('select test', function () {
         var records = getRecords();
         assert.deepEqual(records.select(function (x) { return x.name; }), ['Annie', 'Anivia', 'Ashe', 'Blitzcrank', 'Brand', 'Caitlyn']);
@@ -60,18 +54,22 @@ describe('ts-sharp-linq', function () {
     it('sum test', function () {
         var records = getRecords();
         assert.deepEqual(records.sum(function (x) { return x.rank; }), 10);
+        assert.deepEqual([5, 6, 2, 3].sum(), 16);
     });
     it('average test', function () {
         var records = getRecords();
         assert.deepEqual(records.average(function (x) { return x.rank; }), 10 / 6);
+        assert.deepEqual([5, 6, 2, 3].average(), 4);
     });
     it('min test', function () {
         var records = getRecords();
         assert.deepEqual(records.min(function (x) { return x.win; }), 50.42);
+        assert.deepEqual([5, 6, 2, 3].min(), 2);
     });
     it('max test', function () {
         var records = getRecords();
         assert.deepEqual(records.max(function (x) { return x.win; }), 52.21);
+        assert.deepEqual([5, 6, 2, 3].max(), 6);
     });
     it('take test', function () {
         var records = getRecords();
@@ -197,5 +195,9 @@ describe('ts-sharp-linq', function () {
     it('aggregate test', function () {
         assert.deepEqual([2, 3, 4].aggregate(5, function (prev, current) { return prev * current; }), 120);
         assert.deepEqual([2, 3, 4].aggregate(5, function (prev, current) { return prev * current; }, function (result) { return 'result = ' + result; }), 'result = 120');
+    });
+    it('defaultIfEmpty test', function () {
+        assert.deepEqual(['a', 'b'].defaultIfEmpty(), ['a', 'b']);
+        assert.deepEqual([].defaultIfEmpty(), [null]);
     });
 });

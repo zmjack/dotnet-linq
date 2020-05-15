@@ -41,17 +41,21 @@ var Linq = /** @class */ (function () {
         Array.prototype.groupJoin = this.groupJoin;
         Array.prototype.zip = this.zip;
         Array.prototype.aggregate = this.aggregate;
+        Array.prototype.defaultIfEmpty = this.defaultIfEmpty;
         return true;
     };
-    Linq.version = '0.2.1';
+    Linq.version = '0.5.0';
     Linq.select = function (selector) {
-        return this.map(function (source, index) { return selector(source, index); });
+        var source = this;
+        return source.map(function (v, i) { return selector(v, i); });
     };
     Linq.selectMany = function (selector) {
-        return this.map(function (source, index) { return selector(source, index); }).reduce(function (a, b) { return a.concat(b); });
+        var source = this;
+        return source.map(function (v, i) { return selector(v, i); }).reduce(function (a, b) { return a.concat(b); });
     };
     Linq.where = function (predicate) {
-        return this.filter(predicate);
+        var source = this;
+        return source.filter(predicate);
     };
     Linq.count = function (predicate) {
         var source = !predicate ? this : this.filter(predicate);
@@ -62,54 +66,76 @@ var Linq = /** @class */ (function () {
         return source.length > 0;
     };
     Linq.all = function (predicate) {
-        var source = !predicate ? this : this.filter(function (item) { return !predicate(item); });
-        return source.length === 0;
+        var source = this;
+        return source.filter(function (item) { return !predicate(item); }).length === 0;
     };
     Linq.sum = function (selector) {
-        return this.map(function (source) { return selector(source); }).reduce(function (a, b) { return a + b; });
+        var source = this;
+        if (selector)
+            return source.map(function (x) { return selector(x); }).reduce(function (a, b) { return a + b; });
+        else
+            return source.reduce(function (a, b) { return a + b; });
     };
     Linq.average = function (selector) {
-        return this.map(function (source) { return selector(source); }).reduce(function (a, b) { return a + b; }) / this.length;
+        var source = this;
+        if (selector)
+            return source.map(function (x) { return selector(x); }).reduce(function (a, b) { return a + b; }) / source.length;
+        else
+            return source.reduce(function (a, b) { return a + b; }) / source.length;
     };
     Linq.min = function (selector) {
-        return Math.min.apply(Math, this.map(function (source) { return selector(source); }));
+        var source = this;
+        if (selector)
+            return Math.min.apply(Math, source.map(function (x) { return selector(x); }));
+        else
+            return Math.min.apply(Math, source);
     };
     Linq.max = function (selector) {
-        return Math.max.apply(Math, this.map(function (source) { return selector(source); }));
+        var source = this;
+        if (selector)
+            return Math.max.apply(Math, source.map(function (x) { return selector(x); }));
+        else
+            return Math.max.apply(Math, source);
     };
     Linq.take = function (count) {
-        return this.slice(0, count);
+        var source = this;
+        return source.slice(0, count);
     };
     Linq.takeLast = function (count) {
-        return this.slice(this.length - count);
+        var source = this;
+        return source.slice(source.length - count);
     };
     Linq.takeWhile = function (predicate) {
+        var source = this;
         var count = 0;
-        for (var _i = 0, _a = this; _i < _a.length; _i++) {
-            var item = _a[_i];
+        for (var _i = 0, source_1 = source; _i < source_1.length; _i++) {
+            var item = source_1[_i];
             if (predicate(item))
                 count++;
             else
                 break;
         }
-        return this.slice(0, count);
+        return source.slice(0, count);
     };
     Linq.skip = function (count) {
-        return this.slice(count);
+        var source = this;
+        return source.slice(count);
     };
     Linq.skipLast = function (count) {
-        return this.slice(0, this.length - count);
+        var source = this;
+        return source.slice(0, source.length - count);
     };
     Linq.skipWhile = function (predicate) {
+        var source = this;
         var count = 0;
-        for (var _i = 0, _a = this; _i < _a.length; _i++) {
-            var item = _a[_i];
+        for (var _i = 0, source_2 = source; _i < source_2.length; _i++) {
+            var item = source_2[_i];
             if (predicate(item))
                 count++;
             else
                 break;
         }
-        return this.slice(count);
+        return source.slice(count);
     };
     Linq.firstOrDefault = function (predicate) {
         var source = !predicate ? this : this.filter(predicate);
@@ -184,10 +210,12 @@ var Linq = /** @class */ (function () {
         return true;
     };
     Linq.contains = function (value) {
-        return this.indexOf(value) > -1;
+        var source = this;
+        return source.indexOf(value) > -1;
     };
     Linq.distinct = function () {
-        return Array.from(new Set(this));
+        var source = this;
+        return Array.from(new Set(source));
     };
     Linq.orderBy = function (keySelector) {
         return new Ordered_1.Ordered(this, keySelector, false, void 0);
@@ -196,10 +224,11 @@ var Linq = /** @class */ (function () {
         return new Ordered_1.Ordered(this, keySelector, true, void 0);
     };
     Linq.groupBy = function (keySelector) {
+        var source = this;
         var keyIndexies = {};
         var groups = [];
-        for (var _i = 0, _a = this; _i < _a.length; _i++) {
-            var item = _a[_i];
+        for (var _i = 0, source_3 = source; _i < source_3.length; _i++) {
+            var item = source_3[_i];
             var key = keySelector(item);
             var skey = key.toString();
             if (Object.keys(keyIndexies).indexOf(skey) == -1) {
@@ -238,14 +267,21 @@ var Linq = /** @class */ (function () {
     Linq.aggregate = function (seed, func, resultSelector) {
         var source = this;
         var result = seed;
-        for (var _i = 0, source_1 = source; _i < source_1.length; _i++) {
-            var item = source_1[_i];
+        for (var _i = 0, source_4 = source; _i < source_4.length; _i++) {
+            var item = source_4[_i];
             result = func(result, item);
         }
         if (resultSelector)
             return resultSelector(result);
         else
             return result;
+    };
+    Linq.defaultIfEmpty = function (defaultValue) {
+        var source = this;
+        if (source.length === 0)
+            return [defaultValue ? defaultValue : null];
+        else
+            return source;
     };
     return Linq;
 }());

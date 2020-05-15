@@ -34,15 +34,7 @@ var games: Game[] = [
     { champion: 'Anivia', time: new Date() },
 ]
 
-describe('test', () => {
-
-    it('zip test', () => {
-        console.log([1, 2].zip(['a', 'b', 'c']));
-        console.log([1, 2].zip(['a', 'b', 'c'], (first, second) => { return { f: first, s: second }; }));
-    });
-});
-
-describe('ts-sharp-linq', () => {
+describe('ts-sharp-linq tests', () => {
 
     it('select test', () => {
         var records = getRecords();
@@ -76,18 +68,22 @@ describe('ts-sharp-linq', () => {
     it('sum test', () => {
         var records = getRecords();
         assert.deepEqual(records.sum(x => x.rank), 10);
+        assert.deepEqual([5, 6, 2, 3].sum(), 16);
     });
     it('average test', () => {
         var records = getRecords();
         assert.deepEqual(records.average(x => x.rank), 10 / 6);
+        assert.deepEqual([5, 6, 2, 3].average(), 4);
     });
     it('min test', () => {
         var records = getRecords();
         assert.deepEqual(records.min(x => x.win), 50.42);
+        assert.deepEqual([5, 6, 2, 3].min(), 2);
     });
     it('max test', () => {
         var records = getRecords();
         assert.deepEqual(records.max(x => x.win), 52.21);
+        assert.deepEqual([5, 6, 2, 3].max(), 6);
     });
 
     it('take test', () => {
@@ -217,9 +213,13 @@ describe('ts-sharp-linq', () => {
         assert.deepEqual([1, 2].zip(['a', 'b', 'c']), [{ first: 1, second: 'a' }, { first: 2, second: 'b' }]);
         assert.deepEqual([1, 2].zip(['a', 'b', 'c'], (first, second) => { return { f: first, s: second }; }), [{ f: 1, s: 'a' }, { f: 2, s: 'b' }]);
     });
-
     it('aggregate test', () => {
         assert.deepEqual([2, 3, 4].aggregate(5, (prev, current) => prev * current), 120);
         assert.deepEqual([2, 3, 4].aggregate(5, (prev, current) => prev * current, result => 'result = ' + result), 'result = 120');
+    });
+
+    it('defaultIfEmpty test', () => {
+        assert.deepEqual(['a', 'b'].defaultIfEmpty(), ['a', 'b']);
+        assert.deepEqual([].defaultIfEmpty(), [null]);
     });
 });

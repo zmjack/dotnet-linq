@@ -96,12 +96,14 @@ namespace DotNetLinq.Test
         {
             var records = getRecords();
             assert.deepEqual(records.Min(x => x.win), 50.42);
+            assert.deepEqual(new[] { 5, 6, 2, 3 }.Min(), 2);
         }
         [Fact]
         public void MaxTest()
         {
             var records = getRecords();
             assert.deepEqual(records.Max(x => x.win), 52.21);
+            assert.deepEqual(new[] { 5, 6, 2, 3 }.Max(), 6);
         }
 
         [Fact]
@@ -287,6 +289,13 @@ namespace DotNetLinq.Test
         {
             assert.deepEqual(new[] { 2, 3, 4 }.Aggregate(5, (prev, current) => prev * current), 120);
             assert.deepEqual(new[] { 2, 3, 4 }.Aggregate(5, (prev, current) => prev * current, result => "result = " + result), "result = 120");
+        }
+
+        [Fact]
+        public void GefaultIfEmpty()
+        {
+            assert.deepEqual(new[] { "a", "b" }.DefaultIfEmpty(), new[] { "a", "b" });
+            assert.deepEqual(new string[0].DefaultIfEmpty(), new string[] { null });
         }
 
     }

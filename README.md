@@ -67,20 +67,20 @@ require('dotnet-linq').Linq.enable();
 ### Sum
 
 ```javascript
-[2, 3, 5, 6].sum(x => x);       // 16
+[2, 3, 5, 6].sum();             // 16
 ```
 
 ### Average
 
 ```javascript
-[2, 3, 5, 6].average(x => x);   // 4
+[2, 3, 5, 6].average();         // 4
 ```
 
 ### Min / Max
 
 ```javascript
-[5, 6, 2, 3].min(x => x);       // 2
-[5, 6, 2, 3].max(x => x);       // 6
+[5, 6, 2, 3].min();             // 2
+[5, 6, 2, 3].max();             // 6
 ```
 
 ### Take / TakeLast / TakeWhile

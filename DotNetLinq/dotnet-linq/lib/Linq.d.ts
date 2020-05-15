@@ -9,10 +9,10 @@ export declare class Linq {
     static count: <TSource>(predicate?: (item: TSource) => boolean) => number;
     static any: <TSource>(predicate?: (item: TSource) => boolean) => boolean;
     static all: <TSource>(predicate: (item: TSource) => boolean) => boolean;
-    static sum: <TSource>(selector: (item: TSource) => number) => number;
-    static average: <TSource>(selector: (item: TSource) => number) => number;
-    static min: <TSource>(selector: (item: TSource) => number) => number;
-    static max: <TSource>(selector: (item: TSource) => number) => number;
+    static sum: <TSource>(selector?: (item: TSource) => number) => number;
+    static average: <TSource>(selector?: (item: TSource) => number) => number;
+    static min: <TSource>(selector?: (item: TSource) => number) => number;
+    static max: <TSource>(selector?: (item: TSource) => number) => number;
     static take: <TSource>(count: number) => TSource[];
     static takeLast: <TSource>(count: number) => TSource[];
     static takeWhile: <TSource>(predicate: (item: TSource) => boolean) => TSource[];
@@ -40,4 +40,5 @@ export declare class Linq {
         second: TSecond;
     }>(second: TSecond[], resultSelector?: (first: TFirst, second: TSecond) => TResult) => TResult[];
     static aggregate: <TSource, TAccumulate, TResult = TAccumulate>(seed: TAccumulate, func: (prev: TAccumulate, current: TSource) => TAccumulate, resultSelector?: (result: TAccumulate) => TResult) => TResult;
+    static defaultIfEmpty: <TSource>(defaultValue?: TSource) => TSource[];
 }

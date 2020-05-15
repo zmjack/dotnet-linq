@@ -3,7 +3,7 @@ import { Ordered } from "./Ordered";
 
 export class Linq {
 
-    static version = '0.2.1';
+    static version = '0.5.0';
 
     static enable(): boolean {
         (Array.prototype as any).select = this.select;
@@ -50,19 +50,24 @@ export class Linq {
         (Array.prototype as any).zip = this.zip;
         (Array.prototype as any).aggregate = this.aggregate;
 
+        (Array.prototype as any).defaultIfEmpty = this.defaultIfEmpty;
+
         return true;
     }
 
     static select = function <TSource, TResult>(selector: (item: TSource, index: number) => TResult): TResult[] {
-        return (this as TSource[]).map((source, index) => selector(source, index));
+        var source = this as TSource[];
+        return source.map((v, i) => selector(v, i));
     };
 
     static selectMany = function <TSource, TResult>(selector: (item: TSource, index: number) => TResult[]): TResult[] {
-        return (this as TSource[]).map((source, index) => selector(source, index)).reduce((a, b) => a.concat(b));
+        var source = this as TSource[];
+        return source.map((v, i) => selector(v, i)).reduce((a, b) => a.concat(b));
     };
 
     static where = function <TSource>(predicate: (item: TSource, index: number) => boolean): TSource[] {
-        return (this as TSource[]).filter(predicate);
+        var source = this as TSource[];
+        return source.filter(predicate);
     };
 
     static count = function <TSource>(predicate?: (item: TSource) => boolean): number {
@@ -76,58 +81,72 @@ export class Linq {
     };
 
     static all = function <TSource>(predicate: (item: TSource) => boolean): boolean {
-        var source = !predicate ? this as TSource[] : (this as TSource[]).filter((item: TSource) => !predicate(item));
-        return source.length === 0;
+        var source = (this as TSource[]);
+        return source.filter((item: TSource) => !predicate(item)).length === 0;
     };
 
-    static sum = function <TSource>(selector: (item: TSource) => number): number {
-        return (this as TSource[]).map(source => selector(source)).reduce((a, b) => a + b);
+    static sum = function <TSource>(selector?: (item: TSource) => number): number {
+        var source = (this as TSource[]);
+        if (selector) return source.map(x => selector(x)).reduce((a, b) => a + b);
+        else return (source as any[]).reduce((a, b) => a + b);
     };
 
-    static average = function <TSource>(selector: (item: TSource) => number): number {
-        return (this as TSource[]).map(source => selector(source)).reduce((a, b) => a + b) / (this as TSource[]).length;
+    static average = function <TSource>(selector?: (item: TSource) => number): number {
+        var source = this as TSource[];
+        if (selector) return source.map(x => selector(x)).reduce((a, b) => a + b) / source.length;
+        else return (source as any[]).reduce((a, b) => a + b) / source.length;
     };
 
-    static min = function <TSource>(selector: (item: TSource) => number): number {
-        return Math.min(...(this as TSource[]).map(source => selector(source)));
+    static min = function <TSource>(selector?: (item: TSource) => number): number {
+        var source = this as TSource[];
+        if (selector) return Math.min(...source.map(x => selector(x)));
+        else return Math.min(...(source as any[]));
     };
 
-    static max = function <TSource>(selector: (item: TSource) => number): number {
-        return Math.max(...(this as TSource[]).map(source => selector(source)));
+    static max = function <TSource>(selector?: (item: TSource) => number): number {
+        var source = this as TSource[];
+        if (selector) return Math.max(...source.map(x => selector(x)));
+        else return Math.max(...(source as any[]));
     };
 
     static take = function <TSource>(count: number): TSource[] {
-        return (this as TSource[]).slice(0, count);
+        var source = this as TSource[];
+        return source.slice(0, count);
     };
 
     static takeLast = function <TSource>(count: number): TSource[] {
-        return (this as TSource[]).slice((this as TSource[]).length - count);
+        var source = this as TSource[];
+        return source.slice(source.length - count);
     };
 
     static takeWhile = function <TSource>(predicate: (item: TSource) => boolean): TSource[] {
+        var source = this as TSource[];
         var count = 0;
-        for (var item of this as TSource[]) {
+        for (var item of source) {
             if (predicate(item)) count++;
             else break;
         }
-        return (this as TSource[]).slice(0, count);
+        return source.slice(0, count);
     };
 
     static skip = function <TSource>(count: number): TSource[] {
-        return (this as TSource[]).slice(count);
+        var source = this as TSource[];
+        return source.slice(count);
     };
 
     static skipLast = function <TSource>(count: number): TSource[] {
-        return (this as TSource[]).slice(0, (this as TSource[]).length - count);
+        var source = this as TSource[];
+        return source.slice(0, source.length - count);
     };
 
     static skipWhile = function <TSource>(predicate: (item: TSource) => boolean): TSource[] {
+        var source = this as TSource[];
         var count = 0;
-        for (var item of this as TSource[]) {
+        for (var item of source) {
             if (predicate(item)) count++;
             else break;
         }
-        return (this as TSource[]).slice(count);
+        return source.slice(count);
     };
 
     static firstOrDefault = function <TSource>(predicate?: (item: TSource) => boolean): TSource | null {
@@ -197,11 +216,13 @@ export class Linq {
     };
 
     static contains = function <TSource>(value: TSource): boolean {
-        return (this as TSource[]).indexOf(value) > -1;
+        var source = this as TSource[];
+        return source.indexOf(value) > -1;
     };
 
     static distinct = function <TSource>(): TSource[] {
-        return Array.from(new Set(this as TSource[]));
+        var source = this as TSource[];
+        return Array.from(new Set(source));
     };
 
     static orderBy = function <TSource, TKey = number | string>(keySelector: (item: TSource) => TKey): Ordered<TSource, TKey> {
@@ -213,9 +234,10 @@ export class Linq {
     };
 
     static groupBy = function <TSource, TKey>(keySelector: (item: TSource) => TKey): Array<Grouping<TSource, TKey>> {
+        var source = this as TSource[];
         var keyIndexies = {};
         var groups: Array<Grouping<TSource, TKey>> = [];
-        for (var item of this as TSource[]) {
+        for (var item of source) {
             var key = keySelector(item);
             var skey = key.toString();
             if (Object.keys(keyIndexies).indexOf(skey) == -1) {
@@ -262,6 +284,12 @@ export class Linq {
         if (resultSelector)
             return resultSelector(result);
         else return result as any;
+    }
+
+    static defaultIfEmpty = function <TSource>(defaultValue?: TSource): TSource[] {
+        var source = this as TSource[];
+        if (source.length === 0) return [defaultValue ? defaultValue : null];
+        else return source;
     }
 
 }
