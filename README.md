@@ -177,7 +177,7 @@ require('dotnet-linq').Linq.enable();
 ### Distinct
 
 ```javascript
-[1, 2, 3, 4, 3, 4, 5].distinct(2);  // [ 1, 2, 3, 4, 5 ]
+[1, 2, 3, 4, 3, 4, 5].distinct();  // [ 1, 2, 3, 4, 5 ]
 ```
 
 ### OrderBy / ThenBy
