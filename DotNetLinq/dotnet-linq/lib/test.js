@@ -23,6 +23,7 @@ var games = [
     { champion: 'Brand', time: new Date() },
     { champion: 'Anivia', time: new Date() },
 ];
+console.log(_1.Linq.version);
 describe('ts-sharp-linq tests', function () {
     it('select test', function () {
         var records = getRecords();

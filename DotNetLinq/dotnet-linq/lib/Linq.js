@@ -44,7 +44,7 @@ var Linq = /** @class */ (function () {
         Array.prototype.defaultIfEmpty = this.defaultIfEmpty;
         return true;
     };
-    Linq.version = '0.5.0';
+    Linq.version = '0.6.0';
     Linq.select = function (selector) {
         var source = this;
         return source.map(function (v, i) { return selector(v, i); });
@@ -62,12 +62,15 @@ var Linq = /** @class */ (function () {
         return source.length;
     };
     Linq.any = function (predicate) {
-        var source = !predicate ? this : this.filter(predicate);
-        return source.length > 0;
+        var source = this;
+        if (predicate)
+            return source.some(predicate);
+        else
+            return source.length > 0;
     };
     Linq.all = function (predicate) {
         var source = this;
-        return source.filter(function (item) { return !predicate(item); }).length === 0;
+        return source.every(predicate);
     };
     Linq.sum = function (selector) {
         var source = this;

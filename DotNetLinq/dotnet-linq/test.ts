@@ -34,6 +34,8 @@ var games: Game[] = [
     { champion: 'Anivia', time: new Date() },
 ]
 
+console.log(Linq.version);
+
 describe('ts-sharp-linq tests', () => {
 
     it('select test', () => {

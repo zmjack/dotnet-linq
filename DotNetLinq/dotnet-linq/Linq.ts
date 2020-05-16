@@ -3,7 +3,7 @@ import { Ordered } from "./Ordered";
 
 export class Linq {
 
-    static version = '0.5.0';
+    static version = '0.6.0';
 
     static enable(): boolean {
         (Array.prototype as any).select = this.select;
@@ -76,13 +76,14 @@ export class Linq {
     };
 
     static any = function <TSource>(predicate?: (item: TSource) => boolean): boolean {
-        var source = !predicate ? this as TSource[] : (this as TSource[]).filter(predicate);
-        return source.length > 0;
+        var source = (this as TSource[]);
+        if (predicate) return source.some(predicate);
+        else return source.length > 0;
     };
 
     static all = function <TSource>(predicate: (item: TSource) => boolean): boolean {
         var source = (this as TSource[]);
-        return source.filter((item: TSource) => !predicate(item)).length === 0;
+        return source.every(predicate);
     };
 
     static sum = function <TSource>(selector?: (item: TSource) => number): number {
