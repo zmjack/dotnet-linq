@@ -15,10 +15,10 @@ export declare class Linq {
     static max: <TSource>(selector?: (item: TSource) => number) => number;
     static take: <TSource>(count: number) => TSource[];
     static takeLast: <TSource>(count: number) => TSource[];
-    static takeWhile: <TSource>(predicate: (item: TSource) => boolean) => TSource[];
+    static takeWhile: <TSource>(predicate: (item: TSource, index: number) => boolean) => TSource[];
     static skip: <TSource>(count: number) => TSource[];
     static skipLast: <TSource>(count: number) => TSource[];
-    static skipWhile: <TSource>(predicate: (item: TSource) => boolean) => TSource[];
+    static skipWhile: <TSource>(predicate: (item: TSource, index: number) => boolean) => TSource[];
     static firstOrDefault: <TSource>(predicate?: (item: TSource) => boolean) => TSource;
     static first: <TSource>(predicate?: (item: TSource) => boolean) => TSource;
     static lastOrDefault: <TSource>(predicate?: (item: TSource) => boolean) => TSource;

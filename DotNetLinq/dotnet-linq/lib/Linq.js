@@ -44,7 +44,7 @@ var Linq = /** @class */ (function () {
         Array.prototype.defaultIfEmpty = this.defaultIfEmpty;
         return true;
     };
-    Linq.version = '0.6.0';
+    Linq.version = '0.7.0';
     Linq.select = function (selector) {
         var source = this;
         return source.map(function (v, i) { return selector(v, i); });
@@ -111,9 +111,8 @@ var Linq = /** @class */ (function () {
     Linq.takeWhile = function (predicate) {
         var source = this;
         var count = 0;
-        for (var _i = 0, source_1 = source; _i < source_1.length; _i++) {
-            var item = source_1[_i];
-            if (predicate(item))
+        for (var i = 0; i < source.length; i++) {
+            if (predicate(source[i], i))
                 count++;
             else
                 break;
@@ -131,9 +130,8 @@ var Linq = /** @class */ (function () {
     Linq.skipWhile = function (predicate) {
         var source = this;
         var count = 0;
-        for (var _i = 0, source_2 = source; _i < source_2.length; _i++) {
-            var item = source_2[_i];
-            if (predicate(item))
+        for (var i = 0; i < source.length; i++) {
+            if (predicate(source[i], i))
                 count++;
             else
                 break;
@@ -230,8 +228,8 @@ var Linq = /** @class */ (function () {
         var source = this;
         var keyIndexies = {};
         var groups = [];
-        for (var _i = 0, source_3 = source; _i < source_3.length; _i++) {
-            var item = source_3[_i];
+        for (var _i = 0, source_1 = source; _i < source_1.length; _i++) {
+            var item = source_1[_i];
             var key = keySelector(item);
             var skey = key.toString();
             if (Object.keys(keyIndexies).indexOf(skey) == -1) {
@@ -270,8 +268,8 @@ var Linq = /** @class */ (function () {
     Linq.aggregate = function (seed, func, resultSelector) {
         var source = this;
         var result = seed;
-        for (var _i = 0, source_4 = source; _i < source_4.length; _i++) {
-            var item = source_4[_i];
+        for (var _i = 0, source_2 = source; _i < source_2.length; _i++) {
+            var item = source_2[_i];
             result = func(result, item);
         }
         if (resultSelector)

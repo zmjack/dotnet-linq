@@ -3,7 +3,7 @@ import { Ordered } from "./Ordered";
 
 export class Linq {
 
-    static version = '0.6.0';
+    static version = '0.7.0';
 
     static enable(): boolean {
         (Array.prototype as any).select = this.select;
@@ -120,11 +120,11 @@ export class Linq {
         return source.slice(source.length - count);
     };
 
-    static takeWhile = function <TSource>(predicate: (item: TSource) => boolean): TSource[] {
+    static takeWhile = function <TSource>(predicate: (item: TSource, index: number) => boolean): TSource[] {
         var source = this as TSource[];
         var count = 0;
-        for (var item of source) {
-            if (predicate(item)) count++;
+        for (var i = 0; i < source.length; i++) {
+            if (predicate(source[i], i)) count++;
             else break;
         }
         return source.slice(0, count);
@@ -140,11 +140,11 @@ export class Linq {
         return source.slice(0, source.length - count);
     };
 
-    static skipWhile = function <TSource>(predicate: (item: TSource) => boolean): TSource[] {
+    static skipWhile = function <TSource>(predicate: (item: TSource, index: number) => boolean): TSource[] {
         var source = this as TSource[];
         var count = 0;
-        for (var item of source) {
-            if (predicate(item)) count++;
+        for (var i = 0; i < source.length; i++) {
+            if (predicate(source[i], i)) count++;
             else break;
         }
         return source.slice(count);

@@ -274,6 +274,6 @@ require('dotnet-linq').Linq.enable();
 
 ```javascript
 ['a', 'b'].defaultIfEmpty();    // [ 'a', 'b' ]
-[].defaultIfEmpty(), [null];    // [ null ]
+[].defaultIfEmpty();            // [ null ]
 ```
 
