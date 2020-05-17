@@ -1,4 +1,4 @@
-﻿/// <reference path="lib/extend-array.d.ts" />
+﻿/// <reference path="lib/extend.d.ts" />
 import * as assert from 'should'
 import { Linq } from '.'
 

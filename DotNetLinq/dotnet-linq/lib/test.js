@@ -1,6 +1,6 @@
 "use strict";
 exports.__esModule = true;
-/// <reference path="lib/extend-array.d.ts" />
+/// <reference path="lib/extend.d.ts" />
 var assert = require("should");
 var _1 = require(".");
 _1.Linq.enable();
