@@ -3,7 +3,7 @@ import { Ordered } from "./Ordered";
 
 export class Linq {
 
-    static version = '0.8.0';
+    static version = '0.8.1';
 
     static enable(): boolean {
         (Array.prototype as any).select = this.select;
