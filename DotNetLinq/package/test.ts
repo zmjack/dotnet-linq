@@ -1,11 +1,13 @@
-﻿/// <reference path="lib/extend.d.ts" />
+﻿/// <reference path="lib/extend.linq.d.ts" />
+/// <reference path="lib/extend.linqsharp.d.ts" />
 import * as assert from 'should'
-import Linq from '.'
+import { Linq, LinqSharp, version } from '.'
 
 declare var describe: (name: string, func: Function) => void;
 declare var it: (name: string, func: Function) => void;
 
 Linq.enable();
+LinqSharp.enable();
 
 type Champion = { name: string, win: number, rank: number, counter: Champion[] };
 type Game = { champion: string, time: Date };
@@ -34,9 +36,9 @@ var games: Game[] = [
     { champion: 'Anivia', time: new Date() },
 ]
 
-console.log(Linq.version);
+console.log(version);
 
-describe('dotnet-linq tests', () => {
+describe('Linq Tests', () => {
 
     it('select test', () => {
         var records = getRecords();
@@ -224,4 +226,45 @@ describe('dotnet-linq tests', () => {
         assert.deepEqual(['a', 'b'].defaultIfEmpty(), ['a', 'b']);
         assert.deepEqual([].defaultIfEmpty(), [null]);
     });
+});
+
+type Tree = { name: string, children?: Tree[] };
+
+var trees: Tree[] = [{
+    name: 'A',
+    children: [{
+        name: 'A-a',
+        children: [
+            { name: '1' },
+            { name: '2' },
+        ]
+    }, {
+        name: 'A-b',
+        children: [
+            { name: '3' },
+        ]
+    }]
+}, {
+    name: 'B',
+    children: [
+
+        { name: '4' },
+        { name: '5' },
+    ]
+}];
+
+describe('LinqSharp Tests', () => {
+
+    it('selectUntil test', () => {
+        var expected = ['1', '2', '3', '4', '5'];
+        var actual = trees.selectUntil(x => x.children, x => !(x?.length > 0 ?? false)).map(x => x.name);
+        assert.deepEqual(actual, expected);
+    });
+
+    it('selectWhile test', () => {
+        var expected = ['A', 'A-a', 'A-b', 'B'];
+        var actual = trees.selectWhile(x => x.children, x => x?.length > 0 ?? false).map(x => x.name);
+        assert.deepEqual(actual, expected);
+    });
+
 });

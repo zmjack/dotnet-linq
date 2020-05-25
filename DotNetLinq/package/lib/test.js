@@ -1,9 +1,11 @@
 "use strict";
 exports.__esModule = true;
-/// <reference path="lib/extend.d.ts" />
+/// <reference path="lib/extend.linq.d.ts" />
+/// <reference path="lib/extend.linqsharp.d.ts" />
 var assert = require("should");
 var _1 = require(".");
-_1["default"].enable();
+_1.Linq.enable();
+_1.LinqSharp.enable();
 var lux = { name: 'Lux', win: 50.16, rank: 4, counter: [] };
 var lissandra = { name: 'Lissandra', win: 49.96, rank: 4, counter: [] };
 var ahri = { name: 'Ahri', win: 50.62, rank: 4, counter: [] };
@@ -23,8 +25,8 @@ var games = [
     { champion: 'Brand', time: new Date() },
     { champion: 'Anivia', time: new Date() },
 ];
-console.log(_1["default"].version);
-describe('dotnet-linq tests', function () {
+console.log(_1.version);
+describe('Linq Tests', function () {
     it('select test', function () {
         var records = getRecords();
         assert.deepEqual(records.select(function (x) { return x.name; }), ['Annie', 'Anivia', 'Ashe', 'Blitzcrank', 'Brand', 'Caitlyn']);
@@ -200,5 +202,38 @@ describe('dotnet-linq tests', function () {
     it('defaultIfEmpty test', function () {
         assert.deepEqual(['a', 'b'].defaultIfEmpty(), ['a', 'b']);
         assert.deepEqual([].defaultIfEmpty(), [null]);
+    });
+});
+var trees = [{
+        name: 'A',
+        children: [{
+                name: 'A-a',
+                children: [
+                    { name: '1' },
+                    { name: '2' },
+                ]
+            }, {
+                name: 'A-b',
+                children: [
+                    { name: '3' },
+                ]
+            }]
+    }, {
+        name: 'B',
+        children: [
+            { name: '4' },
+            { name: '5' },
+        ]
+    }];
+describe('LinqSharp Tests', function () {
+    it('selectUntil test', function () {
+        var expected = ['1', '2', '3', '4', '5'];
+        var actual = trees.selectUntil(function (x) { return x.children; }, function (x) { var _a; return !((_a = (x === null || x === void 0 ? void 0 : x.length) > 0) !== null && _a !== void 0 ? _a : false); }).map(function (x) { return x.name; });
+        assert.deepEqual(actual, expected);
+    });
+    it('selectWhile test', function () {
+        var expected = ['A', 'A-a', 'A-b', 'B'];
+        var actual = trees.selectWhile(function (x) { return x.children; }, function (x) { var _a; return (_a = (x === null || x === void 0 ? void 0 : x.length) > 0) !== null && _a !== void 0 ? _a : false; }).map(function (x) { return x.name; });
+        assert.deepEqual(actual, expected);
     });
 });

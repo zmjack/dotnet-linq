@@ -1,3 +1,4 @@
-/// <reference path="extend.d.ts" />
 import { Linq } from './Linq';
-export default Linq;
+import { LinqSharp } from './LinqSharp';
+declare var version: string;
+export { Linq, LinqSharp, version, };

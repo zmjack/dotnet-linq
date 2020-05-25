@@ -1,7 +1,7 @@
+/// <reference path="extend.linq.d.ts" />
 import { Grouping } from "./Grouping";
 import { Ordered } from "./Ordered";
 export declare class Linq {
-    static version: string;
     static enable(): boolean;
     static select: <TSource, TResult>(selector: (item: TSource, index?: number) => TResult) => TResult[];
     static selectMany: <TSource, TResult>(selector: (item: TSource, index?: number) => TResult[]) => TResult[];

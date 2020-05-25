@@ -1,6 +1,7 @@
 "use strict";
 exports.__esModule = true;
 exports.Linq = void 0;
+/// <reference path="lib/extend.linq.d.ts" />
 var Grouping_1 = require("./Grouping");
 var Ordered_1 = require("./Ordered");
 var Linq = /** @class */ (function () {
@@ -44,7 +45,6 @@ var Linq = /** @class */ (function () {
         Array.prototype.defaultIfEmpty = this.defaultIfEmpty;
         return true;
     };
-    Linq.version = '0.8.2';
     Linq.select = function (selector) {
         var source = this;
         return source.map(function (v, i) { return selector(v, i); });

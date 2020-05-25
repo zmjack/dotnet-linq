@@ -1,9 +1,8 @@
-﻿import { Grouping } from "./Grouping";
+﻿/// <reference path="lib/extend.linq.d.ts" />
+import { Grouping } from "./Grouping";
 import { Ordered } from "./Ordered";
 
 export class Linq {
-
-    static version = '0.8.2';
 
     static enable(): boolean {
         (Array.prototype as any).select = this.select;

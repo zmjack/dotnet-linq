@@ -36,7 +36,7 @@ npm i dotnet-linq
 
 ```powershell
 node
-require('dotnet-linq').default.enable();
+require('dotnet-linq').Linq.enable();
 ```
 
 3. Try it.

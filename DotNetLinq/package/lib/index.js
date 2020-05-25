@@ -1,5 +1,9 @@
 "use strict";
 exports.__esModule = true;
-/// <reference path="lib/extend.d.ts" />
+exports.version = exports.LinqSharp = exports.Linq = void 0;
 var Linq_1 = require("./Linq");
-exports["default"] = Linq_1.Linq;
+exports.Linq = Linq_1.Linq;
+var LinqSharp_1 = require("./LinqSharp");
+exports.LinqSharp = LinqSharp_1.LinqSharp;
+var version = "0.8.6";
+exports.version = version;
