@@ -6,6 +6,7 @@ export class LinqSharp {
 
         (Array.prototype as any).selectUntil = this.selectUntil;
         (Array.prototype as any).selectWhile = this.selectWhile;
+        (Array.prototype as any).selectMore = this.selectMore;
 
         return true;
     }
@@ -41,6 +42,25 @@ export class LinqSharp {
                     for (var subNode of selectNode) {
                         recursiveChildren(subNode, list);
                     }
+                }
+            }
+        };
+
+        var source = (this as TSource[]);
+        var ret: TSource[] = [];
+        for (var item of source)
+            recursiveChildren(item, ret);
+        return ret;
+    };
+
+    static selectMore = function <TSource>(selector: (item: TSource) => TSource[]): TSource[] {
+        var recursiveChildren = (node: TSource, list: TSource[]): void => {
+            list.push(node);
+
+            var selectNode = selector(node);
+            if (selectNode?.length > 0 ?? false) {
+                for (var subNode of selectNode) {
+                    recursiveChildren(subNode, list);
                 }
             }
         };

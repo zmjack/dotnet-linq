@@ -224,16 +224,23 @@ var trees = [{
             { name: '4' },
             { name: '5' },
         ]
+    }, {
+        name: '6'
     }];
 describe('LinqSharp Tests', function () {
     it('selectUntil test', function () {
-        var expected = ['1', '2', '3', '4', '5'];
+        var expected = ['1', '2', '3', '4', '5', '6'];
         var actual = trees.selectUntil(function (x) { return x.children; }, function (x) { var _a; return !((_a = (x === null || x === void 0 ? void 0 : x.length) > 0) !== null && _a !== void 0 ? _a : false); }).map(function (x) { return x.name; });
         assert.deepEqual(actual, expected);
     });
     it('selectWhile test', function () {
         var expected = ['A', 'A-a', 'A-b', 'B'];
         var actual = trees.selectWhile(function (x) { return x.children; }, function (x) { var _a; return (_a = (x === null || x === void 0 ? void 0 : x.length) > 0) !== null && _a !== void 0 ? _a : false; }).map(function (x) { return x.name; });
+        assert.deepEqual(actual, expected);
+    });
+    it('selectMore test', function () {
+        var expected = ['A', 'A-a', '1', '2', 'A-b', '3', 'B', '4', '5', '6'];
+        var actual = trees.selectMore(function (x) { return x.children; }).map(function (x) { return x.name; });
         assert.deepEqual(actual, expected);
     });
 });

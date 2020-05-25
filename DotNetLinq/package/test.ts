@@ -251,12 +251,14 @@ var trees: Tree[] = [{
         { name: '4' },
         { name: '5' },
     ]
+}, {
+    name: '6',
 }];
 
 describe('LinqSharp Tests', () => {
 
     it('selectUntil test', () => {
-        var expected = ['1', '2', '3', '4', '5'];
+        var expected = ['1', '2', '3', '4', '5', '6'];
         var actual = trees.selectUntil(x => x.children, x => !(x?.length > 0 ?? false)).map(x => x.name);
         assert.deepEqual(actual, expected);
     });
@@ -267,4 +269,9 @@ describe('LinqSharp Tests', () => {
         assert.deepEqual(actual, expected);
     });
 
+    it('selectMore test', () => {
+        var expected = ['A', 'A-a', '1', '2', 'A-b', '3', 'B', '4', '5', '6'];
+        var actual = trees.selectMore(x => x.children).map(x => x.name);
+        assert.deepEqual(actual, expected);
+    });
 });
