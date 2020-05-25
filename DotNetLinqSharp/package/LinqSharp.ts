@@ -9,29 +9,19 @@ export class LinqSharp {
     }
 
     static selectManyUntil = function <TSource>(selector: (item: TSource, index?: number) => TSource[], until: (array: TSource[]) => boolean): TSource[] {
-
-        var recursiveChildren = function* (node: TSource) {
+        var recursiveChildren = (node: TSource, list: TSource[]): void => {
             var children = selector(node);
             for (var child of children) {
                 var select = selector(child);
-                if (!until(select)) {
-                    for (var child_ of recursiveChildren(child)) {
-                        yield child_;
-                    }
-                }
-                else yield child;
+                if (!until(select))
+                    recursiveChildren(child, list);
+                else list.push(child);
             }
         };
-
         var source = (this as TSource[]);
-        var ret = source.map(x => {
-            var ret: TSource[] = [];
-            for (var item of recursiveChildren(x)) {
-                ret.push(item);
-            }
-            return ret;
-        }).reduce((a, b) => a.concat(b));
-
+        var ret: TSource[] = [];
+        for (var item of source)
+            recursiveChildren(item, ret);
         return ret;
     };
 
