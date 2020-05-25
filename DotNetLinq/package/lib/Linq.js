@@ -44,7 +44,7 @@ var Linq = /** @class */ (function () {
         Array.prototype.defaultIfEmpty = this.defaultIfEmpty;
         return true;
     };
-    Linq.version = '0.8.1';
+    Linq.version = '0.8.2';
     Linq.select = function (selector) {
         var source = this;
         return source.map(function (v, i) { return selector(v, i); });

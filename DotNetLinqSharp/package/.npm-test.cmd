@@ -1,0 +1,6 @@
+@echo off
+echo Compiling...
+call tsc test.ts --downlevelIteration --outdir lib
+cd lib
+echo Testing...
+call mocha

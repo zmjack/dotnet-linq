@@ -1,6 +1,6 @@
 ﻿/// <reference path="lib/extend.d.ts" />
 import * as assert from 'should'
-import { Linq } from '.'
+import Linq from '.'
 
 declare var describe: (name: string, func: Function) => void;
 declare var it: (name: string, func: Function) => void;
@@ -36,7 +36,7 @@ var games: Game[] = [
 
 console.log(Linq.version);
 
-describe('ts-sharp-linq tests', () => {
+describe('dotnet-linq tests', () => {
 
     it('select test', () => {
         var records = getRecords();

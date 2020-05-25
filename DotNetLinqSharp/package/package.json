@@ -1,0 +1,15 @@
+{
+  "name": "dotnet-linq-sharp",
+  "version": "0.8.1",
+  "license": "MIT",
+  "main": "lib/index.js",
+  "files": [
+    "lib",
+    "dist"
+  ],
+  "keywords": [
+    "dotnet",
+    "linq"
+  ],
+  "dependencies": {}
+}

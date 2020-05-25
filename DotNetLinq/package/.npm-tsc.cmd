@@ -5,6 +5,6 @@ cd ..
 echo webpack...
 call webpack
 echo copy dist to Simples
-cd "dotnet-linq"
+cd "package"
 call xcopy "dist" "..\..\Simples\" /Y
 echo done.

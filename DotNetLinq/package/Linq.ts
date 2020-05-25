@@ -3,7 +3,7 @@ import { Ordered } from "./Ordered";
 
 export class Linq {
 
-    static version = '0.8.1';
+    static version = '0.8.2';
 
     static enable(): boolean {
         (Array.prototype as any).select = this.select;
@@ -55,17 +55,17 @@ export class Linq {
         return true;
     }
 
-    static select = function <TSource, TResult>(selector: (item: TSource, index: number) => TResult): TResult[] {
+    static select = function <TSource, TResult>(selector: (item: TSource, index?: number) => TResult): TResult[] {
         var source = this as TSource[];
         return source.map((v, i) => selector(v, i));
     };
 
-    static selectMany = function <TSource, TResult>(selector: (item: TSource, index: number) => TResult[]): TResult[] {
+    static selectMany = function <TSource, TResult>(selector: (item: TSource, index?: number) => TResult[]): TResult[] {
         var source = this as TSource[];
         return source.map((v, i) => selector(v, i)).reduce((a, b) => a.concat(b));
     };
 
-    static where = function <TSource>(predicate: (item: TSource, index: number) => boolean): TSource[] {
+    static where = function <TSource>(predicate: (item: TSource, index?: number) => boolean): TSource[] {
         var source = this as TSource[];
         return source.filter(predicate);
     };
@@ -120,7 +120,7 @@ export class Linq {
         return source.slice(source.length - count);
     };
 
-    static takeWhile = function <TSource>(predicate: (item: TSource, index: number) => boolean): TSource[] {
+    static takeWhile = function <TSource>(predicate: (item: TSource, index?: number) => boolean): TSource[] {
         var source = this as TSource[];
         var count = 0;
         for (var i = 0; i < source.length; i++) {
@@ -140,7 +140,7 @@ export class Linq {
         return source.slice(0, source.length - count);
     };
 
-    static skipWhile = function <TSource>(predicate: (item: TSource, index: number) => boolean): TSource[] {
+    static skipWhile = function <TSource>(predicate: (item: TSource, index?: number) => boolean): TSource[] {
         var source = this as TSource[];
         var count = 0;
         for (var i = 0; i < source.length; i++) {

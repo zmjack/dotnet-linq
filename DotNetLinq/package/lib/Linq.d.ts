@@ -3,9 +3,9 @@ import { Ordered } from "./Ordered";
 export declare class Linq {
     static version: string;
     static enable(): boolean;
-    static select: <TSource, TResult>(selector: (item: TSource, index: number) => TResult) => TResult[];
-    static selectMany: <TSource, TResult>(selector: (item: TSource, index: number) => TResult[]) => TResult[];
-    static where: <TSource>(predicate: (item: TSource, index: number) => boolean) => TSource[];
+    static select: <TSource, TResult>(selector: (item: TSource, index?: number) => TResult) => TResult[];
+    static selectMany: <TSource, TResult>(selector: (item: TSource, index?: number) => TResult[]) => TResult[];
+    static where: <TSource>(predicate: (item: TSource, index?: number) => boolean) => TSource[];
     static count: <TSource>(predicate?: (item: TSource) => boolean) => number;
     static any: <TSource>(predicate?: (item: TSource) => boolean) => boolean;
     static all: <TSource>(predicate: (item: TSource) => boolean) => boolean;
@@ -15,10 +15,10 @@ export declare class Linq {
     static max: <TSource>(selector?: (item: TSource) => number) => number;
     static take: <TSource>(count: number) => TSource[];
     static takeLast: <TSource>(count: number) => TSource[];
-    static takeWhile: <TSource>(predicate: (item: TSource, index: number) => boolean) => TSource[];
+    static takeWhile: <TSource>(predicate: (item: TSource, index?: number) => boolean) => TSource[];
     static skip: <TSource>(count: number) => TSource[];
     static skipLast: <TSource>(count: number) => TSource[];
-    static skipWhile: <TSource>(predicate: (item: TSource, index: number) => boolean) => TSource[];
+    static skipWhile: <TSource>(predicate: (item: TSource, index?: number) => boolean) => TSource[];
     static firstOrDefault: <TSource>(predicate?: (item: TSource) => boolean) => TSource;
     static first: <TSource>(predicate?: (item: TSource) => boolean) => TSource;
     static lastOrDefault: <TSource>(predicate?: (item: TSource) => boolean) => TSource;
