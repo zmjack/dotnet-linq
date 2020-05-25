@@ -3,7 +3,7 @@ exports.__esModule = true;
 /// <reference path="lib/extend.d.ts" />
 var assert = require("should");
 var _1 = require(".");
-_1.Linq.enable();
+_1["default"].enable();
 var lux = { name: 'Lux', win: 50.16, rank: 4, counter: [] };
 var lissandra = { name: 'Lissandra', win: 49.96, rank: 4, counter: [] };
 var ahri = { name: 'Ahri', win: 50.62, rank: 4, counter: [] };
@@ -23,8 +23,8 @@ var games = [
     { champion: 'Brand', time: new Date() },
     { champion: 'Anivia', time: new Date() },
 ];
-console.log(_1.Linq.version);
-describe('ts-sharp-linq tests', function () {
+console.log(_1["default"].version);
+describe('dotnet-linq tests', function () {
     it('select test', function () {
         var records = getRecords();
         assert.deepEqual(records.select(function (x) { return x.name; }), ['Annie', 'Anivia', 'Ashe', 'Blitzcrank', 'Brand', 'Caitlyn']);
