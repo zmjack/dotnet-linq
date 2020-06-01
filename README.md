@@ -235,7 +235,7 @@ require('dotnet-linq').Linq.enable();
 
 ### Contains
 
-- **contains**
+- **contains** (similar to **JavaScript** function **includes**)
   Determines whether a sequence contains a specified element by using the default equality comparer.
 
 ```javascript

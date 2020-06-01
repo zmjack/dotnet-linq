@@ -11,11 +11,11 @@ var LinqSharp = /** @class */ (function () {
         Array.prototype.selectMore = this.selectMore;
         return true;
     };
-    LinqSharp.selectUntil = function (selector, until) {
+    LinqSharp.selectUntil = function (childrenSelector, predicate) {
         var recursiveChildren = function (node, list) {
             var _a;
-            var selectNode = selector(node);
-            if (until(selectNode))
+            var selectNode = childrenSelector(node);
+            if (predicate(selectNode))
                 list.push(node);
             else {
                 if ((_a = (selectNode === null || selectNode === void 0 ? void 0 : selectNode.length) > 0) !== null && _a !== void 0 ? _a : false) {
@@ -34,11 +34,11 @@ var LinqSharp = /** @class */ (function () {
         }
         return ret;
     };
-    LinqSharp.selectWhile = function (selector, _while) {
+    LinqSharp.selectWhile = function (childrenSelector, predicate) {
         var recursiveChildren = function (node, list) {
             var _a;
-            var selectNode = selector(node);
-            if (_while(selectNode)) {
+            var selectNode = childrenSelector(node);
+            if (predicate(selectNode)) {
                 list.push(node);
                 if ((_a = (selectNode === null || selectNode === void 0 ? void 0 : selectNode.length) > 0) !== null && _a !== void 0 ? _a : false) {
                     for (var _i = 0, selectNode_2 = selectNode; _i < selectNode_2.length; _i++) {
@@ -56,12 +56,14 @@ var LinqSharp = /** @class */ (function () {
         }
         return ret;
     };
-    LinqSharp.selectMore = function (selector) {
+    LinqSharp.selectMore = function (childrenSelector, predicate) {
+        var _this = this;
         var recursiveChildren = function (node, list) {
-            var _a;
-            list.push(node);
-            var selectNode = selector(node);
-            if ((_a = (selectNode === null || selectNode === void 0 ? void 0 : selectNode.length) > 0) !== null && _a !== void 0 ? _a : false) {
+            var _a, _b;
+            if ((_a = predicate === null || predicate === void 0 ? void 0 : predicate.call(_this, node)) !== null && _a !== void 0 ? _a : true)
+                list.push(node);
+            var selectNode = childrenSelector(node);
+            if ((_b = (selectNode === null || selectNode === void 0 ? void 0 : selectNode.length) > 0) !== null && _b !== void 0 ? _b : false) {
                 for (var _i = 0, selectNode_3 = selectNode; _i < selectNode_3.length; _i++) {
                     var subNode = selectNode_3[_i];
                     recursiveChildren(subNode, list);

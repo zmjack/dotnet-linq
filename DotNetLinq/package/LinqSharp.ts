@@ -11,10 +11,10 @@ export class LinqSharp {
         return true;
     }
 
-    static selectUntil = function <TSource>(selector: (item: TSource) => TSource[], until: (array: TSource[]) => boolean): TSource[] {
+    static selectUntil = function <TSource>(childrenSelector: (item: TSource) => TSource[], predicate: (array: TSource[]) => boolean): TSource[] {
         var recursiveChildren = (node: TSource, list: TSource[]): void => {
-            var selectNode = selector(node);
-            if (until(selectNode))
+            var selectNode = childrenSelector(node);
+            if (predicate(selectNode))
                 list.push(node);
             else {
                 if (selectNode?.length > 0 ?? false) {
@@ -32,12 +32,11 @@ export class LinqSharp {
         return ret;
     };
 
-    static selectWhile = function <TSource>(selector: (item: TSource) => TSource[], _while: (array: TSource[]) => boolean): TSource[] {
+    static selectWhile = function <TSource>(childrenSelector: (item: TSource) => TSource[], predicate: (array: TSource[]) => boolean): TSource[] {
         var recursiveChildren = (node: TSource, list: TSource[]): void => {
-            var selectNode = selector(node);
-            if (_while(selectNode)) {
+            var selectNode = childrenSelector(node);
+            if (predicate(selectNode)) {
                 list.push(node);
-
                 if (selectNode?.length > 0 ?? false) {
                     for (var subNode of selectNode) {
                         recursiveChildren(subNode, list);
@@ -53,11 +52,11 @@ export class LinqSharp {
         return ret;
     };
 
-    static selectMore = function <TSource>(selector: (item: TSource) => TSource[]): TSource[] {
+    static selectMore = function <TSource>(childrenSelector: (item: TSource) => TSource[], predicate?: (array: TSource) => boolean): TSource[] {
         var recursiveChildren = (node: TSource, list: TSource[]): void => {
-            list.push(node);
+            if (predicate?.call(this, node) ?? true) list.push(node);
 
-            var selectNode = selector(node);
+            var selectNode = childrenSelector(node);
             if (selectNode?.length > 0 ?? false) {
                 for (var subNode of selectNode) {
                     recursiveChildren(subNode, list);

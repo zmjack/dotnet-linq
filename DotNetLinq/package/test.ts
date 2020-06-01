@@ -269,9 +269,15 @@ describe('LinqSharp Tests', () => {
         assert.deepEqual(actual, expected);
     });
 
-    it('selectMore test', () => {
+    it('selectMore test1', () => {
         var expected = ['A', 'A-a', '1', '2', 'A-b', '3', 'B', '4', '5', '6'];
         var actual = trees.selectMore(x => x.children).map(x => x.name);
+        assert.deepEqual(actual, expected);
+    });
+
+    it('selectMore test2', () => {
+        var expected = ['A', 'A-a', 'A-b'];
+        var actual = trees.selectMore(x => x.children, x => x.name.includes('A')).map(x => x.name);
         assert.deepEqual(actual, expected);
     });
 });
