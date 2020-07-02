@@ -15,7 +15,7 @@ var LinqSharp = /** @class */ (function () {
         var recursiveChildren = function (node, list) {
             var _a;
             var selectNode = childrenSelector(node);
-            if (predicate(selectNode))
+            if (predicate(node))
                 list.push(node);
             else {
                 if ((_a = (selectNode === null || selectNode === void 0 ? void 0 : selectNode.length) > 0) !== null && _a !== void 0 ? _a : false) {
@@ -38,7 +38,7 @@ var LinqSharp = /** @class */ (function () {
         var recursiveChildren = function (node, list) {
             var _a;
             var selectNode = childrenSelector(node);
-            if (predicate(selectNode)) {
+            if (predicate(node)) {
                 list.push(node);
                 if ((_a = (selectNode === null || selectNode === void 0 ? void 0 : selectNode.length) > 0) !== null && _a !== void 0 ? _a : false) {
                     for (var _i = 0, selectNode_2 = selectNode; _i < selectNode_2.length; _i++) {

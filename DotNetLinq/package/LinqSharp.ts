@@ -11,10 +11,10 @@ export class LinqSharp {
         return true;
     }
 
-    static selectUntil = function <TSource>(childrenSelector: (item: TSource) => TSource[], predicate: (array: TSource[]) => boolean): TSource[] {
+    static selectUntil = function <TSource>(childrenSelector: (item: TSource) => TSource[], predicate: (array: TSource) => boolean): TSource[] {
         var recursiveChildren = (node: TSource, list: TSource[]): void => {
             var selectNode = childrenSelector(node);
-            if (predicate(selectNode))
+            if (predicate(node))
                 list.push(node);
             else {
                 if (selectNode?.length > 0 ?? false) {
@@ -32,10 +32,10 @@ export class LinqSharp {
         return ret;
     };
 
-    static selectWhile = function <TSource>(childrenSelector: (item: TSource) => TSource[], predicate: (array: TSource[]) => boolean): TSource[] {
+    static selectWhile = function <TSource>(childrenSelector: (item: TSource) => TSource[], predicate: (array: TSource) => boolean): TSource[] {
         var recursiveChildren = (node: TSource, list: TSource[]): void => {
             var selectNode = childrenSelector(node);
-            if (predicate(selectNode)) {
+            if (predicate(node)) {
                 list.push(node);
                 if (selectNode?.length > 0 ?? false) {
                     for (var subNode of selectNode) {

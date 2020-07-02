@@ -259,13 +259,13 @@ describe('LinqSharp Tests', () => {
 
     it('selectUntil test', () => {
         var expected = ['1', '2', '3', '4', '5', '6'];
-        var actual = trees.selectUntil(x => x.children, x => !(x?.length > 0 ?? false)).map(x => x.name);
+        var actual = trees.selectUntil(x => x.children, x => !(x.children?.length > 0 ?? false)).map(x => x.name);
         assert.deepEqual(actual, expected);
     });
 
     it('selectWhile test', () => {
         var expected = ['A', 'A-a', 'A-b', 'B'];
-        var actual = trees.selectWhile(x => x.children, x => x?.length > 0 ?? false).map(x => x.name);
+        var actual = trees.selectWhile(x => x.children, x => x.children?.length > 0 ?? false).map(x => x.name);
         assert.deepEqual(actual, expected);
     });
 
