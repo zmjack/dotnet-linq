@@ -228,6 +228,12 @@ var trees = [{
         name: '6'
     }];
 describe('LinqSharp Tests', function () {
+    it('selectPage Tests', function () {
+        var numbers = [1, 2, 3, 4, 5, 6, 7];
+        var expected = [4, 5, 6];
+        var actual = numbers.selectPage(2, 3);
+        assert.deepEqual(actual, expected);
+    });
     it('selectUntil test', function () {
         var expected = ['1', '2', '3', '4', '5', '6'];
         var actual = trees.selectUntil(function (x) { return x.children; }, function (x) { var _a, _b; return !((_b = ((_a = x.children) === null || _a === void 0 ? void 0 : _a.length) > 0) !== null && _b !== void 0 ? _b : false); }).map(function (x) { return x.name; });

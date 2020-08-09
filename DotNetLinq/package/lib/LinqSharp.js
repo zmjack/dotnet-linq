@@ -6,10 +6,15 @@ var LinqSharp = /** @class */ (function () {
     function LinqSharp() {
     }
     LinqSharp.enable = function () {
+        Array.prototype.selectPage = this.selectPage;
         Array.prototype.selectUntil = this.selectUntil;
         Array.prototype.selectWhile = this.selectWhile;
         Array.prototype.selectMore = this.selectMore;
         return true;
+    };
+    LinqSharp.selectPage = function (pageNumber, pageSize) {
+        var source = this;
+        return source.slice((pageNumber - 1) * pageSize).slice(0, pageSize);
     };
     LinqSharp.selectUntil = function (childrenSelector, predicate) {
         var recursiveChildren = function (node, list) {

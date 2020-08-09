@@ -257,6 +257,13 @@ var trees: Tree[] = [{
 
 describe('LinqSharp Tests', () => {
 
+    it('selectPage Tests', () => {
+        var numbers = [1, 2, 3, 4, 5, 6, 7];
+        var expected = [4, 5, 6];
+        var actual = numbers.selectPage(2, 3);
+        assert.deepEqual(actual, expected);
+    });
+
     it('selectUntil test', () => {
         var expected = ['1', '2', '3', '4', '5', '6'];
         var actual = trees.selectUntil(x => x.children, x => !(x.children?.length > 0 ?? false)).map(x => x.name);
