@@ -1,7 +1,7 @@
 ﻿import { Linq } from './Linq'
 import { LinqSharp } from './LinqSharp'
 
-var version = "0.9.5";
+var version = "0.9.6";
 
 export {
     Linq,

@@ -231,7 +231,7 @@ var Linq = /** @class */ (function () {
         for (var _i = 0, source_1 = source; _i < source_1.length; _i++) {
             var item = source_1[_i];
             var key = keySelector(item);
-            var skey = key.toString();
+            var skey = key === null || key === void 0 ? void 0 : key.toString();
             if (Object.keys(keyIndexies).indexOf(skey) == -1) {
                 keyIndexies[skey] = groups.length;
                 groups.push(new Grouping_1.Grouping(key));
