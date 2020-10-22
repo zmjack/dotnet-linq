@@ -61,7 +61,7 @@ export class Linq {
 
     static selectMany = function <TSource, TResult>(selector: (item: TSource, index?: number) => TResult[]): TResult[] {
         var source = this as TSource[];
-        return source.map((v, i) => selector(v, i)).reduce((a, b) => a.concat(b));
+        return source.map((v, i) => selector(v, i)).reduce((a, b) => a.concat(b), []);
     };
 
     static where = function <TSource>(predicate: (item: TSource, index?: number) => boolean): TSource[] {
@@ -87,14 +87,14 @@ export class Linq {
 
     static sum = function <TSource>(selector?: (item: TSource) => number): number {
         var source = (this as TSource[]);
-        if (selector) return source.map(x => selector(x)).reduce((a, b) => a + b);
-        else return (source as any[]).reduce((a, b) => a + b);
+        if (selector) return source.map(x => selector(x)).reduce((a, b) => a + b, 0);
+        else return (source as any[]).reduce((a, b) => a + b, 0);
     };
 
     static average = function <TSource>(selector?: (item: TSource) => number): number {
         var source = this as TSource[];
-        if (selector) return source.map(x => selector(x)).reduce((a, b) => a + b) / source.length;
-        else return (source as any[]).reduce((a, b) => a + b) / source.length;
+        if (selector) return source.map(x => selector(x)).reduce((a, b) => a + b, 0) / source.length;
+        else return (source as any[]).reduce((a, b) => a + b, 0) / source.length;
     };
 
     static min = function <TSource>(selector?: (item: TSource) => number): number {

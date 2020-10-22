@@ -1,6 +1,6 @@
 {
   "name": "dotnet-linq",
-  "version": "0.9.7",
+  "version": "0.9.8",
   "license": "MIT",
   "main": "lib/index.js",
   "files": [

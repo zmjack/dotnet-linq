@@ -51,7 +51,7 @@ var Linq = /** @class */ (function () {
     };
     Linq.selectMany = function (selector) {
         var source = this;
-        return source.map(function (v, i) { return selector(v, i); }).reduce(function (a, b) { return a.concat(b); });
+        return source.map(function (v, i) { return selector(v, i); }).reduce(function (a, b) { return a.concat(b); }, []);
     };
     Linq.where = function (predicate) {
         var source = this;
@@ -75,16 +75,16 @@ var Linq = /** @class */ (function () {
     Linq.sum = function (selector) {
         var source = this;
         if (selector)
-            return source.map(function (x) { return selector(x); }).reduce(function (a, b) { return a + b; });
+            return source.map(function (x) { return selector(x); }).reduce(function (a, b) { return a + b; }, 0);
         else
-            return source.reduce(function (a, b) { return a + b; });
+            return source.reduce(function (a, b) { return a + b; }, 0);
     };
     Linq.average = function (selector) {
         var source = this;
         if (selector)
-            return source.map(function (x) { return selector(x); }).reduce(function (a, b) { return a + b; }) / source.length;
+            return source.map(function (x) { return selector(x); }).reduce(function (a, b) { return a + b; }, 0) / source.length;
         else
-            return source.reduce(function (a, b) { return a + b; }) / source.length;
+            return source.reduce(function (a, b) { return a + b; }, 0) / source.length;
     };
     Linq.min = function (selector) {
         var source = this;
