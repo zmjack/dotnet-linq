@@ -6,5 +6,5 @@ echo webpack...
 call webpack
 echo copy dist to Simples
 cd "package"
-call xcopy "dist" "..\..\Simples\" /Y
+call xcopy "dist" "..\Simples\" /Y
 echo done.
