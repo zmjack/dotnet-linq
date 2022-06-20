@@ -225,14 +225,13 @@ var Linq = /** @class */ (function () {
         return new Ordered_1.Ordered(this, keySelector, true, void 0);
     };
     Linq.groupBy = function (keySelector) {
-        var _a;
         var source = this;
         var keyIndexies = {};
         var groups = [];
         for (var _i = 0, source_1 = source; _i < source_1.length; _i++) {
             var item = source_1[_i];
             var key = keySelector(item);
-            var skey = (_a = key === null || key === void 0 ? void 0 : key.toString()) !== null && _a !== void 0 ? _a : 'null';
+            var skey = JSON.stringify(key);
             if (Object.keys(keyIndexies).indexOf(skey) == -1) {
                 keyIndexies[skey] = groups.length;
                 groups.push(new Grouping_1.Grouping(key));

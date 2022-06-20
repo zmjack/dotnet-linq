@@ -239,7 +239,8 @@ export class Linq {
         var groups: Array<Grouping<TSource, TKey>> = [];
         for (var item of source) {
             var key = keySelector(item);
-            var skey = key?.toString() ?? 'null';
+            var skey = JSON.stringify(key);
+
             if (Object.keys(keyIndexies).indexOf(skey) == -1) {
                 keyIndexies[skey] = groups.length;
                 groups.push(new Grouping<TSource, TKey>(key));

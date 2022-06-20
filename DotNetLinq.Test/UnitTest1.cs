@@ -251,6 +251,18 @@ namespace DotNetLinq.Test
             assert.deepEqual(result[2].Select(x => x.name), new[] { "Blitzcrank", "Caitlyn" });
         }
         [Fact]
+        public void GroupByTest2()
+        {
+            var records = getRecords();
+            var result = records.GroupBy(x => new { x.rank }).ToArray();
+            assert.deepEqual(result[0].Key, new { rank = 3 });
+            assert.deepEqual(result[0].Select(x => x.name), new[] { "Annie" });
+            assert.deepEqual(result[1].Key, new { rank = 1 });
+            assert.deepEqual(result[1].Select(x => x.name), new[] { "Anivia", "Ashe", "Brand" });
+            assert.deepEqual(result[2].Key, new { rank = 2 });
+            assert.deepEqual(result[2].Select(x => x.name), new[] { "Blitzcrank", "Caitlyn" });
+        }
+        [Fact]
         public void GroupJoinTest()
         {
             var records = getRecords();

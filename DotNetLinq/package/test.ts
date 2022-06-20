@@ -195,6 +195,16 @@ describe('Linq Tests', () => {
         assert.deepEqual(result[2].key, 2);
         assert.deepEqual(result[2].select(x => x.name), ['Blitzcrank', 'Caitlyn']);
     });
+    it('groupBy test2', () => {
+        var records = getRecords();
+        var result = records.groupBy(x => { return { rank: x.rank } });
+        assert.deepEqual(result[0].key, { rank: 3 });
+        assert.deepEqual(result[0].select(x => x.name), ['Annie']);
+        assert.deepEqual(result[1].key, { rank: 1 });
+        assert.deepEqual(result[1].select(x => x.name), ['Anivia', 'Ashe', 'Brand']);
+        assert.deepEqual(result[2].key, { rank: 2 });
+        assert.deepEqual(result[2].select(x => x.name), ['Blitzcrank', 'Caitlyn']);
+    });
     it('groupJoin test', () => {
         var records = getRecords();
         var result = records.groupJoin(games, x => x.name, x => x.champion, (o, i): GameStat => {

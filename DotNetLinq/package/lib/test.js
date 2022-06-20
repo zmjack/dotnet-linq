@@ -174,6 +174,16 @@ describe('Linq Tests', function () {
         assert.deepEqual(result[2].key, 2);
         assert.deepEqual(result[2].select(function (x) { return x.name; }), ['Blitzcrank', 'Caitlyn']);
     });
+    it('groupBy test2', function () {
+        var records = getRecords();
+        var result = records.groupBy(function (x) { return { rank: x.rank }; });
+        assert.deepEqual(result[0].key, { rank: 3 });
+        assert.deepEqual(result[0].select(function (x) { return x.name; }), ['Annie']);
+        assert.deepEqual(result[1].key, { rank: 1 });
+        assert.deepEqual(result[1].select(function (x) { return x.name; }), ['Anivia', 'Ashe', 'Brand']);
+        assert.deepEqual(result[2].key, { rank: 2 });
+        assert.deepEqual(result[2].select(function (x) { return x.name; }), ['Blitzcrank', 'Caitlyn']);
+    });
     it('groupJoin test', function () {
         var records = getRecords();
         var result = records.groupJoin(games, function (x) { return x.name; }, function (x) { return x.champion; }, function (o, i) {
