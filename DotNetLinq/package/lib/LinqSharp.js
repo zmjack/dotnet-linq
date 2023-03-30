@@ -1,8 +1,8 @@
 "use strict";
 /// <reference path="lib/extend.linqsharp.d.ts" />
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.LinqSharp = void 0;
-var LinqSharp = /** @class */ (function () {
+var LinqSharp = exports.LinqSharp = /** @class */ (function () {
     function LinqSharp() {
     }
     LinqSharp.enable = function () {
@@ -85,4 +85,3 @@ var LinqSharp = /** @class */ (function () {
     };
     return LinqSharp;
 }());
-exports.LinqSharp = LinqSharp;

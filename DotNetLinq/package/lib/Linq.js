@@ -1,10 +1,10 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 exports.Linq = void 0;
 /// <reference path="lib/extend.linq.d.ts" />
 var Grouping_1 = require("./Grouping");
 var Ordered_1 = require("./Ordered");
-var Linq = /** @class */ (function () {
+var Linq = exports.Linq = /** @class */ (function () {
     function Linq() {
     }
     Linq.enable = function () {
@@ -286,4 +286,3 @@ var Linq = /** @class */ (function () {
     };
     return Linq;
 }());
-exports.Linq = Linq;

@@ -1,5 +1,5 @@
 "use strict";
-exports.__esModule = true;
+Object.defineProperty(exports, "__esModule", { value: true });
 /// <reference path="lib/extend.linq.d.ts" />
 /// <reference path="lib/extend.linqsharp.d.ts" />
 var assert = require("should");
@@ -189,7 +189,7 @@ describe('Linq Tests', function () {
         var result = records.groupJoin(games, function (x) { return x.name; }, function (x) { return x.champion; }, function (o, i) {
             return {
                 champion: o.name,
-                count: i.length
+                count: i.length,
             };
         });
         assert.deepEqual(result, [
@@ -235,7 +235,7 @@ var trees = [{
             { name: '5' },
         ]
     }, {
-        name: '6'
+        name: '6',
     }];
 describe('LinqSharp Tests', function () {
     it('selectPage Tests', function () {
